@@ -2,7 +2,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class ViewController: UIViewController,FBSDKLoginButtonDelegate{
+class MainForm: UIViewController,FBSDKLoginButtonDelegate{
 
        override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,6 +10,11 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate{
         let loginButton=FBSDKLoginButton()
         loginButton.readPermissions=["email"]
         loginButton.delegate=self
+            //loginButton.contentMode = .scaleToFill
+        loginButton.frame.size.width=232
+        loginButton.frame.size.height=40
+        loginButton.layer.cornerRadius = loginButton.frame.size.height/2
+        //loginButton.isHidden=true
             loginButton.center=self.view.center
             self.view.addSubview(loginButton)
         }
@@ -20,6 +25,7 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate{
     override func viewWillAppear(_ animated: Bool) {
          //self.logUserData()
     }
+    ove
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         if(error==nil)
         {
@@ -36,9 +42,10 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate{
                 if let result = result as? [String: Any] {
                     print(result["name"] ?? "")
                     print(result["id"] ?? "")
-                    print(result["email"] ?? "")
+                    //print(result["email"] ?? "")
 //                    print(result["email"] ?? "")
 //                    print(result["image"] ?? "")
+                    performSegue(withIdentifier: "MainForm", sender: self)
                 }
             } // End of graph request
         }
@@ -46,7 +53,9 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate{
         {
           print(error.localizedDescription)
         }
+        
     }
+    
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         print("user logged out..")
     }
